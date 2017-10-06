@@ -1,5 +1,5 @@
 {
-    "name": "tuupola/slim-api-skeleton",
+    "name": "groupnet/slim-api-skeleton",
     "description": "Slim 3 + Spot + Monolog API skeleton",
     "type": "project",
     "keywords": [
