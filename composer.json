@@ -6,6 +6,12 @@
         "slim",
         "skeleton"
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/groupnet/slim-api-skeleton"
+        }
+    ],
     "homepage": "https://github.com/tuupola/slim-api-skeleton",
     "license": "MIT",
     "authors": [
