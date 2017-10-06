@@ -16,15 +16,13 @@
 require __DIR__ . "/vendor/autoload.php";
 
 
-$dotenv->load();
-
 $app = new \Slim\App([
     "settings" => [
         "displayErrorDetails" => true
     ]
 ]);
 
-require __DIR__ . "config.php";
+require __DIR__ . "/config.php";
 
 require __DIR__ . "/config/logger.php";
 require __DIR__ . "/config/handlers.php";
