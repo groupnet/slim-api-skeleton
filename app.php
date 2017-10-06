@@ -15,7 +15,7 @@
 
 require __DIR__ . "/vendor/autoload.php";
 
-$dotenv = new Dotenv\Dotenv(__DIR__);
+
 $dotenv->load();
 
 $app = new \Slim\App([
@@ -23,6 +23,8 @@ $app = new \Slim\App([
         "displayErrorDetails" => true
     ]
 ]);
+
+require __DIR__ . "config.php";
 
 require __DIR__ . "/config/logger.php";
 require __DIR__ . "/config/handlers.php";
