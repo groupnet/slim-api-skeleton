@@ -47,7 +47,7 @@ $app->post("/token", function ($request, $response, $arguments) {
         "scope" => $scopes
     ];
 
-    $secret = getenv("JWT_SECRET");
+    $secret = JWT_SECRET;
     $token = JWT::encode($payload, $secret, "HS256");
     $data["status"] = "ok";
     $data["token"] = $token;

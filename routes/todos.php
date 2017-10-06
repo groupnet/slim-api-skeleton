@@ -33,30 +33,26 @@ $app->get("/todos", function ($request, $response, $arguments) {
         throw new ForbiddenException("Token not allowed to list todos.", 403);
     }
 
-    /* Use ETag and date from Todo with most recent update. */
-    $first = $this->spot->mapper("App\Todo")
-        ->all()
-        ->order(["updated_at" => "DESC"])
-        ->first();
-
-    /* Add Last-Modified and ETag headers to response. */
-    $response = $this->cache->withEtag($response, $first->etag());
-    $response = $this->cache->withLastModified($response, $first->timestamp());
-
-    /* If-Modified-Since and If-None-Match request header handling. */
-    /* Heads up! Apache removes previously set Last-Modified header */
-    /* from 304 Not Modified responses. */
-    if ($this->cache->isNotModified($request, $response)) {
-        return $response->withStatus(304);
-    }
-
-    $todos = $this->spot->mapper("App\Todo")
-        ->all()
-        ->order(["updated_at" => "DESC"]);
+    $todos = [
+      [
+        'id' => '1',
+        'title' => 'Hogfather',
+        'yr' => '1998',
+        'author_name' => 'Philip K Dick',
+        'author_email' => 'philip@example.org',
+      ],
+      [
+        'id' => '2',
+        'title' => 'Game Of Kill Everyone',
+        'yr' => '2014',
+        'author_name' => 'George R. R. Satan',
+        'author_email' => 'george@example.org',
+      ]
+    ];
 
     /* Serialize the response data. */
     $fractal = new Manager();
-    $fractal->setSerializer(new DataArraySerializer);
+    // $fractal->setSerializer(new DataArraySerializer);
     $resource = new Collection($todos, new TodoTransformer);
     $data = $fractal->createData($resource)->toArray();
 
@@ -102,23 +98,25 @@ $app->get("/todos/{uid}", function ($request, $response, $arguments) {
         throw new ForbiddenException("Token not allowed to list todos.", 403);
     }
 
-    /* Load existing todo using provided uid */
-    if (false === $todo = $this->spot->mapper("App\Todo")->first([
-        "uid" => $arguments["uid"]
-    ])) {
-        throw new NotFoundException("Todo not found.", 404);
-    };
 
-    /* Add Last-Modified and ETag headers to response. */
-    $response = $this->cache->withEtag($response, $todo->etag());
-    $response = $this->cache->withLastModified($response, $todo->timestamp());
+    $todos = [
+      [
+        'id' => '1',
+        'title' => 'Hogfather',
+        'yr' => '1998',
+        'author_name' => 'Philip K Dick',
+        'author_email' => 'philip@example.org',
+      ],
+      [
+        'id' => '2',
+        'title' => 'Game Of Kill Everyone',
+        'yr' => '2014',
+        'author_name' => 'George R. R. Satan',
+        'author_email' => 'george@example.org',
+      ]
+    ];
 
-    /* If-Modified-Since and If-None-Match request header handling. */
-    /* Heads up! Apache removes previously set Last-Modified header */
-    /* from 304 Not Modified responses. */
-    if ($this->cache->isNotModified($request, $response)) {
-        return $response->withStatus(304);
-    }
+    $todo = $todos[$arguments["uid"]];
 
     /* Serialize the response data. */
     $fractal = new Manager();

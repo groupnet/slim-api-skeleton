@@ -40,7 +40,7 @@ $container["JwtAuthentication"] = function ($container) {
     return new JwtAuthentication([
         "path" => "/",
         "passthrough" => ["/token"],
-        "secret" => getenv("JWT_SECRET"),
+        "secret" => JWT_SECRET,
         "logger" => $container["logger"],
         "relaxed" => ["192.168.50.52"],
         "error" => function ($request, $response, $arguments) {

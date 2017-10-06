@@ -21,16 +21,22 @@ use League\Fractal;
 class TodoTransformer extends Fractal\TransformerAbstract
 {
 
-    public function transform(Todo $todo)
+    public function transform($todo)
     {
-        return [
-            "uid" => (string)$todo->uid ?: null,
-            "order" => (integer)$todo->order ?: 0,
-            "title" => (string)$todo->title ?: null,
-            "completed" => !!$todo->completed,
-            "links"        => [
-                "self" => "/todos/{$todo->uid}"
-            ]
-        ];
+      return [
+          'id'      => (int) $todo['id'],
+          'title'   => $todo['title'],
+          'year'    => (int) $todo['yr'],
+          'author'  => [
+            'name'  => $todo['author_name'],
+            'email' => $todo['author_email'],
+          ],
+          'links'   => [
+              [
+                  'rel' => 'self',
+                  'uri' => '/todos/'.$todo['id'],
+              ]
+          ]
+      ];
     }
 }
